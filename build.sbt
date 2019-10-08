@@ -3,8 +3,8 @@ lazy val root = (project in file("."))
     organization := "com.iravid",
     name := "play-json-cats",
     version := "1.1.0",
-    scalaVersion := "2.11.12",
-    crossScalaVersions := Seq("2.11.12", "2.12.4"),
+    scalaVersion := "2.13.1",
+    crossScalaVersions := Seq("2.11.12", "2.12.10", "2.13.1"),
     scalacOptions ++= Seq(
       "-deprecation",
       "-encoding", "UTF-8",
@@ -15,17 +15,16 @@ lazy val root = (project in file("."))
       "-unchecked",
       "-Xfatal-warnings",
       "-Xlint",
-      "-Yno-adapted-args",
       "-Ywarn-dead-code",
       "-Ywarn-numeric-widen",
-      "-Ywarn-value-discard",
-      "-Xfuture"
+      "-Ywarn-value-discard"
     ),
     libraryDependencies ++= Seq(
-      "org.typelevel"     %% "cats-core" % "1.1.0",
-      "com.typesafe.play" %% "play-json" % "2.6.8",
-      "org.typelevel"     %% "cats-laws" % "1.0.1" % "test",
-      "org.scalatest"     %% "scalatest" % "3.0.4" % "test"
+      "org.typelevel"     %% "cats-core"            % "2.0.0",
+      "com.typesafe.play" %% "play-json"            % "2.7.4"     % "provided",
+      "org.typelevel"     %% "cats-laws"            % "2.0.0"     % "test",
+      "org.scalatest"     %% "scalatest"            % "3.0.8"     % "test",
+      "org.typelevel"     %% "discipline-scalatest" % "1.0.0-RC1" % "test"
     ),
     licenses += ("Apache-2.0", url("https://opensource.org/licenses/Apache-2.0")),
     homepage := Some(url("https://github.com/iravid/play-json-cats")),

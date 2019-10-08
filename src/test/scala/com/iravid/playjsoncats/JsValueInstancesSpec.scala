@@ -1,16 +1,15 @@
 package com.iravid.playjsoncats
 
 import cats.kernel.laws.discipline.MonoidTests
-import org.scalatest.FunSuite
-import org.scalatest.prop.GeneratorDrivenPropertyChecks
+import cats.{Monoid, Semigroup}
+import com.iravid.playjsoncats.JsArrayInstances._
+import com.iravid.playjsoncats.JsObjectInstances._
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatestplus.scalacheck.ScalaCheckDrivenPropertyChecks
 import org.typelevel.discipline.scalatest.Discipline
-
-import cats.{ Monoid, Semigroup }
 import play.api.libs.json._
-import JsObjectInstances._
-import JsArrayInstances._
 
-class JsValueInstancesSpec extends FunSuite with Discipline with GeneratorDrivenPropertyChecks {
+class JsValueInstancesSpec extends AnyFunSuite with Discipline with ScalaCheckDrivenPropertyChecks {
   import Arbitraries._
 
   checkAll("JsObject", MonoidTests[JsObject].monoid)

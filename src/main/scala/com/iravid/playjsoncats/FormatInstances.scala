@@ -1,8 +1,16 @@
 package com.iravid.playjsoncats
 
-import cats.{ Applicative, Monad }
-import cats.{ Contravariant, Invariant }
-import play.api.libs.json.{ Format, JsError, JsResult, JsSuccess, JsValue, Reads, Writes }
+import cats.{Applicative, Monad}
+import cats.{Contravariant, Invariant}
+import play.api.libs.json.{
+  Format,
+  JsError,
+  JsResult,
+  JsSuccess,
+  JsValue,
+  Reads,
+  Writes
+}
 
 import scala.annotation.tailrec
 
@@ -53,10 +61,11 @@ private[playjsoncats] sealed trait ReadsInstances1 {
 
 object WritesInstances extends WritesInstances
 trait WritesInstances {
-  implicit val writesContravariant: Contravariant[Writes] = new Contravariant[Writes] {
-    def contramap[A, B](fa: Writes[A])(f: B => A): Writes[B] =
-      Writes(b => fa.writes(f(b)))
-  }
+  implicit val writesContravariant: Contravariant[Writes] =
+    new Contravariant[Writes] {
+      def contramap[A, B](fa: Writes[A])(f: B => A): Writes[B] =
+        Writes(b => fa.writes(f(b)))
+    }
 }
 
 object FormatInstances extends FormatInstances
