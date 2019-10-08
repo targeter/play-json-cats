@@ -1,8 +1,8 @@
 package com.iravid.playjsoncats
 
-import cats.kernel.{Eq, Monoid, Semigroup}
-import cats.{Applicative, ApplicativeError, Eval, Monad, MonadError, Traverse}
-import play.api.libs.json.{JsError, JsResult, JsSuccess}
+import cats.kernel.{ Eq, Monoid, Semigroup }
+import cats.{ Applicative, ApplicativeError, Eval, Monad, MonadError, Traverse }
+import play.api.libs.json.{ JsError, JsResult, JsSuccess }
 
 import scala.annotation.tailrec
 
@@ -27,8 +27,7 @@ private[playjsoncats] sealed trait JsResultInstances0 {
 
       def raiseError[A](e: JsError): JsResult[A] = e
 
-      def handleErrorWith[A](fa: JsResult[A])(
-          f: JsError => JsResult[A]): JsResult[A] =
+      def handleErrorWith[A](fa: JsResult[A])(f: JsError => JsResult[A]): JsResult[A] =
         fa match {
           case s @ JsSuccess(_, _) => s
           case e: JsError          => f(e)
@@ -38,10 +37,8 @@ private[playjsoncats] sealed trait JsResultInstances0 {
   implicit def jsResultEq[A]: Eq[JsResult[A]] = Eq.fromUniversalEquals
 }
 
-private[playjsoncats] sealed trait JsResultInstances1
-    extends JsResultInstances2 {
-  implicit val jsResultMonads
-    : MonadError[JsResult, JsError] with Monad[JsResult] =
+private[playjsoncats] sealed trait JsResultInstances1 extends JsResultInstances2 {
+  implicit val jsResultMonads: MonadError[JsResult, JsError] with Monad[JsResult] =
     new MonadError[JsResult, JsError] with Monad[JsResult] {
       def pure[A](x: A) = JsSuccess(x)
 
@@ -57,8 +54,7 @@ private[playjsoncats] sealed trait JsResultInstances1
 
       override def map[A, B](fa: JsResult[A])(f: A => B): JsResult[B] = fa map f
 
-      def handleErrorWith[A](fa: JsResult[A])(
-          f: JsError => JsResult[A]): JsResult[A] =
+      def handleErrorWith[A](fa: JsResult[A])(f: JsError => JsResult[A]): JsResult[A] =
         fa match {
           case e: JsError => f(e)
           case _          => fa
@@ -77,8 +73,7 @@ private[playjsoncats] sealed trait JsResultInstances1
 
 private[playjsoncats] sealed trait JsResultInstances2 {
   implicit val jsResultTraverse: Traverse[JsResult] = new Traverse[JsResult] {
-    override def traverse[G[_]: Applicative, A, B](fa: JsResult[A])(
-        f: A => G[B]): G[JsResult[B]] =
+    override def traverse[G[_]: Applicative, A, B](fa: JsResult[A])(f: A => G[B]): G[JsResult[B]] =
       fa match {
         case e: JsError      => Applicative[G].pure(e)
         case JsSuccess(a, p) => Applicative[G].map(f(a))(JsSuccess(_, p))
@@ -87,8 +82,7 @@ private[playjsoncats] sealed trait JsResultInstances2 {
     def foldLeft[A, B](fa: JsResult[A], b: B)(f: (B, A) => B): B =
       fa.map(f(b, _)).getOrElse(b)
 
-    def foldRight[A, B](fa: JsResult[A], lb: Eval[B])(
-        f: (A, Eval[B]) => Eval[B]): Eval[B] =
+    def foldRight[A, B](fa: JsResult[A], lb: Eval[B])(f: (A, Eval[B]) => Eval[B]): Eval[B] =
       fa.map(f(_, lb)).getOrElse(lb)
 
     override def map[A, B](fa: JsResult[A])(f: A => B): JsResult[B] = fa map f

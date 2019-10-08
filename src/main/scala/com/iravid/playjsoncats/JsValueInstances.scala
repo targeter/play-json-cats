@@ -1,7 +1,7 @@
 package com.iravid.playjsoncats
 
 import cats.kernel.Eq
-import play.api.libs.json.{Json, JsObject, JsArray}
+import play.api.libs.json.{ Json, JsObject, JsArray }
 import cats.Monoid
 
 object JsObjectInstances extends JsObjectInstances

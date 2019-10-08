@@ -1,16 +1,8 @@
 package com.iravid.playjsoncats
 
-import cats.{Applicative, Monad}
-import cats.{Contravariant, Invariant}
-import play.api.libs.json.{
-  Format,
-  JsError,
-  JsResult,
-  JsSuccess,
-  JsValue,
-  Reads,
-  Writes
-}
+import cats.{ Applicative, Monad }
+import cats.{ Contravariant, Invariant }
+import play.api.libs.json.{ Format, JsError, JsResult, JsSuccess, JsValue, Reads, Writes }
 
 import scala.annotation.tailrec
 
